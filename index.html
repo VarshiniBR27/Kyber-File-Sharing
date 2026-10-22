@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b172a" />
+    <meta name="description" content="Post-quantum secure file sharing prototype using ML-KEM-768 and AES-256-GCM." />
+    <title>KyberShare — Post-Quantum File Sharing</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="KyberShare home"><span class="brand-mark">K</span><span>Kyber<span class="brand-light">Share</span></span></a>
+        <span class="security-pill"><span class="status-dot"></span> Post-quantum prototype</span>
+      </header>
+      <main class="container">
+        <section class="hero">
+          <p class="eyebrow">PRIVATE BY DESIGN</p>
+          <h1>Your files. <span>Your keys.</span></h1>
+          <p class="hero-copy">Encrypt in your browser with ML-KEM-768 key encapsulation and AES-256-GCM file encryption. The server stores only encrypted file bytes.</p>
+          <div class="algorithm-row"><span>ML-KEM-768 · FIPS 203</span><span class="algorithm-separator">/</span><span>AES-256-GCM</span></div>
+        </section>
+        <section class="notice" role="note"><strong>Prototype notice</strong><span>For demos and non-sensitive test files only. Verify public keys out-of-band. Anyone with a share ID can fetch its encrypted file.</span></section>
+        <section class="workspace">
+          <article class="panel">
+            <div class="panel-heading"><span class="step">01</span><div><h2>Recipient keys</h2><p>Create a key pair for the person receiving the file.</p></div></div>
+            <button id="generate-keys" class="button button-secondary" type="button">Generate recipient keys</button>
+            <div id="key-status" class="inline-status" aria-live="polite">No key pair generated in this session.</div>
+            <div class="download-row"><button id="download-public" class="button button-quiet" type="button" disabled>↓ Public key JSON</button><button id="download-private" class="button button-quiet" type="button" disabled>↓ Private key JSON</button></div>
+            <p class="field-help">Share only the public key. Keep the private key secret and backed up; it is not uploaded to the server.</p>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><span class="step">02</span><div><h2>Encrypt &amp; upload</h2><p>Choose the recipient's public-key JSON and a file.</p></div></div>
+            <label class="field-label" for="recipient-public">Recipient public-key file</label>
+            <input id="recipient-public" type="file" accept=".json,application/json" />
+            <label class="field-label" for="plain-file">File to encrypt <span class="muted">(max 25 MB)</span></label>
+            <input id="plain-file" type="file" />
+            <button id="encrypt-upload" class="button button-primary" type="button">Encrypt &amp; upload file <span>↗</span></button>
+            <div id="upload-status" class="inline-status" aria-live="polite">Your file is encrypted before upload.</div>
+            <div id="share-result" class="share-result" hidden></div>
+          </article>
+          <article class="panel panel-wide">
+            <div class="panel-heading"><span class="step">03</span><div><h2>Download &amp; decrypt</h2><p>Use the share ID and matching recipient private-key JSON.</p></div></div>
+            <div class="decrypt-grid">
+              <div><label class="field-label" for="share-id">Share ID</label><input id="share-id" type="text" placeholder="Paste the share ID" autocomplete="off" /></div>
+              <div><label class="field-label" for="recipient-private">Recipient private-key JSON</label><input id="recipient-private" type="file" accept=".json,application/json" /></div>
+            </div>
+            <button id="decrypt-download" class="button button-primary" type="button">Download &amp; decrypt</button>
+            <div id="download-status" class="inline-status" aria-live="polite">Decryption happens locally in your browser.</div>
+          </article>
+        </section>
+        <footer><span>KyberShare · Learning project</span><span>Never upload private keys.</span></footer>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
